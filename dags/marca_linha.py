@@ -27,19 +27,9 @@ default_args = {
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG("boti_insert_data", default_args=default_args, schedule_interval=timedelta(1))
+dag = DAG("sales_consolidated_marca_linha", default_args=default_args, schedule_interval=timedelta(1))
 
-def get_data(**kwargs):
-    path = './bases/'
-    files = [f for f in listdir(path) if isfile(join(path, f))]
-
-    return files 
-
-
-def insert_data(**kwargs):
-    ti = kwargs['ti']
-    response = ti.xcom_pull(task_ids='get_data')
-
+def get_conn():
     hostname="35.222.130.110"
     dbname="testeboticario"
     uname="cristiano"
@@ -47,18 +37,37 @@ def insert_data(**kwargs):
 
     engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host=hostname, db=dbname, user=uname, pw=pwd))
 
-    for file in response:
-        print("AQUI")
-        print(file)
-        if('.xlsx' in file):
-            df = pd.read_excel("./bases/"+file,engine='openpyxl')
-            print('Aqui1')
-            print(df)
-            df.to_sql('sales', engine, index=False,if_exists='append')
-        else:
-            print("Não foi encontrado nenhum arquivo xlsx na diretório")
+    return engine
 
-with DAG('BOTI_INSERT_DATA',
+def get_data(**kwargs):
+
+    engine = get_conn()
+
+    #Consolidado de vendas por marca e linha;
+    sql = """
+            select 
+            MARCA, 
+            LINHA,
+            sum(QTD_VENDA) QTD_VENDA
+            from sales 
+            group by MARCA,LINHA
+            order by 3 desc;
+            """
+    df = pd.read_sql_query(sql, engine)
+
+    return df
+
+
+def insert_data(**kwargs):
+    ti = kwargs['ti']
+    df = ti.xcom_pull(task_ids='get_data')
+
+    engine = get_conn()
+
+    df.to_sql('sales_consolidated_marca_linha', engine, index=False,if_exists='append')
+
+
+with DAG('sales_consolidated_marca_linha',
         default_args = default_args,
         schedule_interval = '0 3 * * *',
         catchup=False) as dag:
