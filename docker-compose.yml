@@ -12,7 +12,9 @@ services:
                 max-file: "3"
 
     webserver:
-        image: puckel/docker-airflow:1.10.9
+        build:
+            context: .
+        image: cristiao:lasted #puckel/docker-airflow:1.10.9
         restart: always
         depends_on:
             - postgres

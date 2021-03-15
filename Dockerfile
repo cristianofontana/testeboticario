@@ -1,9 +1,3 @@
-# VERSION 1.10.9
-# AUTHOR: Matthieu "Puckel_" Roisil
-# DESCRIPTION: Basic Airflow container
-# BUILD: docker build --rm -t puckel/docker-airflow .
-# SOURCE: https://github.com/puckel/docker-airflow
-
 FROM python:3.7-slim-buster
 LABEL maintainer="Cristiano_Boticario"
 
@@ -56,6 +50,12 @@ RUN set -ex \
     && useradd -ms /bin/bash -d ${AIRFLOW_USER_HOME} airflow \
     && pip install -U pip setuptools wheel \
     && pip install pytz \
+    && pip install xlrd \
+    && pip install openpyxl \
+    && pip install s3fs \
+    && pip install boto3 \
+    && pip install pymysql \
+    && pip install SQLAlchemy==1.3.15 \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
@@ -75,6 +75,7 @@ RUN set -ex \
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
+COPY bases/ ${AIRFLOW_USER_HOME}/bases/
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 
