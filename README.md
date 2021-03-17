@@ -12,9 +12,9 @@ $ docker-compose up --build
 
 Na pasta dags encontran-se todas as ETLs que são responsaveis pela ingestão das bases, modelagem, e extração de dados do twitter. 
 
-dags -> ETLs
-sql -> sql utilizado para criação das tabelas 
-bases -> bases de dados utilizadas no teste
+* dags -> ETLs
+* sql -> sql utilizado para criação das tabelas 
+* bases -> bases de dados utilizadas no teste
 
 ### Pontos de melhoria
 
