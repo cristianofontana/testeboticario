@@ -49,7 +49,7 @@ def get_data(**kwargs):
             MARCA, 
             LINHA,
             sum(QTD_VENDA) QTD_VENDA
-            from sales 
+            from vendas 
             group by MARCA,LINHA
             order by 3 desc;
             """

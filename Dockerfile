@@ -54,6 +54,7 @@ RUN set -ex \
     && pip install openpyxl \
     && pip install s3fs \
     && pip install boto3 \
+    && pip install tweepy \
     && pip install pymysql \
     && pip install SQLAlchemy==1.3.15 \
     && pip install pyOpenSSL \
