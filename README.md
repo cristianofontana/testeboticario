@@ -19,6 +19,6 @@ bases -> bases de dados utilizadas no teste
 ### Pontos de melhoria
 
 No futuro pode-se: 
-    * Armazenar as keys em um lugar seguro e criptografado.
-    * Armazenar os dados raw em uma store na nuvem (s3, Cloud Store)
-    * Fazer uso da ferramenta Cloud Composer em produção
+* Armazenar as keys em um lugar seguro e criptografado.
+* Armazenar os dados raw em uma store na nuvem (s3, Cloud Store)
+* Fazer uso da ferramenta Cloud Composer em produção
