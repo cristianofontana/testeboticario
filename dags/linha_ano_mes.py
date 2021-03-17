@@ -50,7 +50,7 @@ def get_data(**kwargs):
             YEAR(DATA_VENDA) as ANO, 
             month(DATA_VENDA) as MES,
             sum(QTD_VENDA) QTD_VENDA
-            from sales 
+            from vendas 
             group by LINHA,YEAR(DATA_VENDA), month(DATA_VENDA)
             order by 1,2,3 asc;
             """

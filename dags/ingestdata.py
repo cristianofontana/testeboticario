@@ -48,13 +48,10 @@ def insert_data(**kwargs):
     engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host=hostname, db=dbname, user=uname, pw=pwd))
 
     for file in response:
-        print("AQUI")
-        print(file)
         if('.xlsx' in file):
             df = pd.read_excel("./bases/"+file,engine='openpyxl')
-            print('Aqui1')
-            print(df)
-            df.to_sql('sales', engine, index=False,if_exists='append')
+            df.to_sql('vendas', engine, index=False, if_exists='append')
+            print("Inserido no BD")
         else:
             print("Não foi encontrado nenhum arquivo xlsx na diretório")
 
