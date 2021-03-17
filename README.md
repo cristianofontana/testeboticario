@@ -6,6 +6,7 @@ Clone o repositório e execute os seguintes comandos para o airflow ser iniciado
 ```sh
 $ cd testeboticario
 $ docker-compose up --build
+```
 
 ### Estrutura do Projeto
 
