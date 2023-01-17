@@ -35,6 +35,7 @@ RUN set -ex \
     && apt-get update -yqq \
     && apt-get upgrade -yqq \
     && apt-get install -yqq --no-install-recommends \
+    && apt install -y default-jdk \
         $buildDeps \
         freetds-bin \
         build-essential \
@@ -52,8 +53,11 @@ RUN set -ex \
     && pip install pytz \
     && pip install xlrd \
     && pip install openpyxl \
+    && pip install markupsafe==2.0.1 \
+    && pip install WTForms==2.3.3 \
     && pip install s3fs \
     && pip install boto3 \
+    && pip install mysql-connector \
     && pip install tweepy \
     && pip install pymysql \
     && pip install SQLAlchemy==1.3.15 \
@@ -73,6 +77,8 @@ RUN set -ex \
         /usr/share/man \
         /usr/share/doc \
         /usr/share/doc-base
+
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
